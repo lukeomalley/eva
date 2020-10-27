@@ -21,6 +21,7 @@ function testEval() {
 
     // Variables
     { input: ['var', 'x', 5], expected: 5 },
+    { input: 'x', expected: 5 },
   ];
 
   let testHasFailed = false;

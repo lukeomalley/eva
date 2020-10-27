@@ -8,13 +8,21 @@ class Environment {
 
   /**
    * Stores a variable in the environment
-   * @param {*} name The name of the variable to store.
-   * @param {*} value The value of the variable to store.
-   * @returns The value set.
    */
-  define(name, value) {
+  set(name, value) {
     this.values[name] = value;
     return value;
+  }
+
+  /**
+   * Returns the value of the given variable
+   */
+  get(name) {
+    if (!this.values.hasOwnProperty(name)) {
+      throw new ReferenceError(`Variable ${name} is not defined.`);
+    }
+
+    return this.values[name];
   }
 }
 

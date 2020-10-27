@@ -48,11 +48,19 @@ class Eva {
     // =========================================================================
     if (expr[0] === 'var') {
       const [_, name, value] = expr;
-      env.define(name, value);
+      env.set(name, value);
       return value;
     }
 
+    if (this.isVariableName(expr)) {
+      return env.get(expr);
+    }
+
     console.log(`Unimplemented: ${JSON.stringify(expr)}`);
+  }
+
+  isVariableName(expr) {
+    return typeof expr === 'string' && /^[a-zA-Z][a-zA-Z0-9_]*$/.test(expr);
   }
 
   isNumber(expr) {
