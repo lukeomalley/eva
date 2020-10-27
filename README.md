@@ -1,6 +1,6 @@
-# Eva Lang
+# Eva Lang 🦆
 
-Eva is a dialect of lisp implemented in JavaScript. This project was build with the purpose of understanding how an interpreter for a dialect of lisp works.
+> Eva is a dialect of lisp implemented in JavaScript. This project was build with the purpose of understanding how an interpreter for a dialect of lisp works.
 
 ## Examples
 
