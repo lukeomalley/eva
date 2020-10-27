@@ -18,8 +18,12 @@ function testEval() {
     { input: ['+', ['*', 3, 2], 5], expected: 11 },
     { input: ['/', ['*', 3, 2], 3], expected: 2 },
     { input: ['-', ['-', ['*', 5, 5], 2], 3], expected: 20 },
+
+    // Variables
+    { input: ['var', 'x', 5], expected: 5 },
   ];
 
+  let testHasFailed = false;
   const eva = new Eva();
   tests.forEach((test, i) => {
     const result = eva.eval(test.input);
@@ -27,13 +31,16 @@ function testEval() {
     try {
       assert.strictEqual(result, test.expected);
     } catch (err) {
+      testHasFailed = true;
       console.log(
         `[test] Failed: expected ${test.expected}, but got ${result}`
       );
     }
   });
 
-  console.log(`Ok: ${tests.length} tests passed! 🎉`);
+  if (!testHasFailed) {
+    console.log(`Ok: ${tests.length} tests passed! 🎉`);
+  }
 }
 
 testEval();

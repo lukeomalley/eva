@@ -1,8 +1,17 @@
+const Environment = require('./Environment');
+
 /**
  * Eva interpreter
  */
 class Eva {
-  eval(expr) {
+  constructor(globalEnv = new Environment()) {
+    this.global = globalEnv;
+  }
+
+  eval(expr, env = this.global) {
+    // =========================================================================
+    // Literals
+    // =========================================================================
     if (this.isNumber(expr)) {
       return expr;
     }
@@ -11,6 +20,9 @@ class Eva {
       return expr.slice(1, -1);
     }
 
+    // =========================================================================
+    // Binary Operators
+    // =========================================================================
     if (expr[0] === '+') {
       return this.eval(expr[1]) + this.eval(expr[2]);
     }
@@ -31,7 +43,16 @@ class Eva {
       return this.eval(expr[1]) % this.eval(expr[2]);
     }
 
-    throw 'Unimplemented';
+    // =========================================================================
+    // Variables
+    // =========================================================================
+    if (expr[0] === 'var') {
+      const [_, name, value] = expr;
+      env.define(name, value);
+      return value;
+    }
+
+    console.log(`Unimplemented: ${JSON.stringify(expr)}`);
   }
 
   isNumber(expr) {
