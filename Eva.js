@@ -48,8 +48,7 @@ class Eva {
     // =========================================================================
     if (expr[0] === 'var') {
       const [_, name, value] = expr;
-      env.set(name, value);
-      return value;
+      return env.set(name, this.eval(value));
     }
 
     if (this.isVariableName(expr)) {
@@ -60,7 +59,7 @@ class Eva {
   }
 
   isVariableName(expr) {
-    return typeof expr === 'string' && /^[a-zA-Z][a-zA-Z0-9_]*$/.test(expr);
+    return typeof expr === 'string' && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(expr);
   }
 
   isNumber(expr) {

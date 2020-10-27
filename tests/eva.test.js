@@ -1,5 +1,7 @@
-const Eva = require('../Eva');
 const assert = require('assert');
+
+const Eva = require('../Eva');
+const Environment = require('../Environment');
 
 function testEval() {
   const tests = [
@@ -22,10 +24,24 @@ function testEval() {
     // Variables
     { input: ['var', 'x', 5], expected: 5 },
     { input: 'x', expected: 5 },
+    { input: ['var', 'isUser', 'true'], expected: true },
+    { input: 'isUser', expected: true },
+
+    // Globals
+    { input: 'null', expected: null },
+    { input: 'true', expected: true },
+    { input: 'false', expected: false },
   ];
 
   let testHasFailed = false;
-  const eva = new Eva();
+  const eva = new Eva(
+    new Environment({
+      null: null,
+      true: true,
+      false: false,
+    })
+  );
+
   tests.forEach((test, i) => {
     const result = eva.eval(test.input);
 
@@ -33,8 +49,11 @@ function testEval() {
       assert.strictEqual(result, test.expected);
     } catch (err) {
       testHasFailed = true;
+      console.log(typeof result);
+      console.log(typeof test.expected);
+
       console.log(
-        `[test] Failed: expected ${test.expected}, but got ${result}`
+        `[test - ${test.input}] Failed: expected ${test.expected}, but got ${result}`
       );
     }
   });
