@@ -43,6 +43,9 @@ class Eva {
       return this.eval(expr[1], env) % this.eval(expr[2], env);
     }
 
+    // =========================================================================
+    // Conparison Operators
+    // =========================================================================
     if (expr[0] === '>') {
       return this.eval(expr[1], env) > this.eval(expr[2], env);
     }
@@ -59,16 +62,20 @@ class Eva {
       return this.eval(expr[1], env) <= this.eval(expr[2], env);
     }
 
+    if (expr[0] === '==') {
+      return this.eval(expr[1], env) === this.eval(expr[2], env);
+    }
+
     // =========================================================================
     // Variables
     // =========================================================================
     if (expr[0] === 'var') {
-      const [_, name, value] = expr;
+      const [_tag, name, value] = expr;
       return env.define(name, this.eval(value, env));
     }
 
     if (expr[0] === 'set') {
-      const [_, name, value] = expr;
+      const [_tag, name, value] = expr;
       return env.set(name, this.eval(value, env));
     }
 
@@ -88,7 +95,7 @@ class Eva {
     // Conditionals
     // =========================================================================
     if (expr[0] === 'if') {
-      const [_, condition, consequent, alternate] = expr;
+      const [_tag, condition, consequent, alternate] = expr;
       if (this.eval(condition, env)) {
         return this.eval(consequent, env);
       }
@@ -97,11 +104,25 @@ class Eva {
     }
 
     // =========================================================================
+    // Loops
+    // =========================================================================
+    if (expr[0] === 'while') {
+      const [_tag, condition, body] = expr;
+      let result;
+      while (this.eval(condition, env)) {
+        result = this.eval(body, env);
+      }
+
+      return result;
+    }
+
+    // =========================================================================
     // Print
     // =========================================================================
 
     if (expr[0] === 'print') {
       console.log(this.eval(expr[1], env));
+      return null;
     }
 
     console.log(`Unimplemented: ${JSON.stringify(expr)}`);

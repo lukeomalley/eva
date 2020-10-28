@@ -31,6 +31,11 @@ function testEval() {
     { name: "globals 2", input: 'true', expected: true },
     { name: "globals 3", input: 'false', expected: false },
 
+    // Print
+    { name: "print 1", input: ['print', '"print - Hello World!"'], expected: null },
+
+
+
     // Blocks
     {
       name: "blocks 1",
@@ -85,7 +90,7 @@ function testEval() {
 
     // If
     {
-      name: "assignment 1",
+      name: "if 1",
       input: [
         'begin', 
         ['var', 'x', 5], 
@@ -97,6 +102,24 @@ function testEval() {
         'y'
       ],
       expected: 30,
+    },
+
+    // While
+    {
+      name: "while 1",
+      input: [
+        'begin', 
+        ['var', 'counter', 1], 
+        ['var', 'result', 1], 
+        ['while', ['<', 'counter', 10],
+          ['begin',
+            ['set', 'result', ['*', 'result', 2]],
+            ['set', 'counter', ['+', 'counter', 1]],
+          ],
+        ],
+        'result'
+      ],
+      expected: 512,
     },
   ];
 
