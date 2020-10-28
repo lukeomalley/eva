@@ -68,6 +68,7 @@ function testEval() {
       ],
       expected: 30,
     },
+
     // Assignment
     {
       name: "assignment 1",
@@ -81,10 +82,30 @@ function testEval() {
       ],
       expected: 100,
     },
+
+    // If
+    {
+      name: "assignment 1",
+      input: [
+        'begin', 
+        ['var', 'x', 5], 
+        ['var', 'y', 20], 
+        ['if', ['>', 'x', 10],
+          ['set', 'y', 20],
+          ['set', 'y', 30]
+        ],
+        'y'
+      ],
+      expected: 30,
+    },
   ];
 
-  let testHasFailed = false;
 
+  // ===========================================================================
+  // Test Runner
+  // ===========================================================================
+
+  let testHasFailed = false;
   tests.forEach((test, i) => {
     const eva = new Eva(
       new Environment({

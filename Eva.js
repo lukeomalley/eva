@@ -43,6 +43,22 @@ class Eva {
       return this.eval(expr[1], env) % this.eval(expr[2], env);
     }
 
+    if (expr[0] === '>') {
+      return this.eval(expr[1], env) > this.eval(expr[2], env);
+    }
+
+    if (expr[0] === '<') {
+      return this.eval(expr[1], env) < this.eval(expr[2], env);
+    }
+
+    if (expr[0] === '>=') {
+      return this.eval(expr[1], env) >= this.eval(expr[2], env);
+    }
+
+    if (expr[0] === '<=') {
+      return this.eval(expr[1], env) <= this.eval(expr[2], env);
+    }
+
     // =========================================================================
     // Variables
     // =========================================================================
@@ -63,10 +79,29 @@ class Eva {
     // =========================================================================
     // Blocks
     // =========================================================================
-
     if (expr[0] === 'begin') {
       const blockEnv = new Environment({}, env);
       return this._evalBlock(expr, blockEnv);
+    }
+
+    // =========================================================================
+    // Conditionals
+    // =========================================================================
+    if (expr[0] === 'if') {
+      const [_, condition, consequent, alternate] = expr;
+      if (this.eval(condition, env)) {
+        return this.eval(consequent, env);
+      }
+
+      return this.eval(alternate, env);
+    }
+
+    // =========================================================================
+    // Print
+    // =========================================================================
+
+    if (expr[0] === 'print') {
+      console.log(this.eval(expr[1], env));
     }
 
     console.log(`Unimplemented: ${JSON.stringify(expr)}`);
