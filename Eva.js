@@ -48,6 +48,11 @@ class Eva {
     // =========================================================================
     if (expr[0] === 'var') {
       const [_, name, value] = expr;
+      return env.define(name, this.eval(value, env));
+    }
+
+    if (expr[0] === 'set') {
+      const [_, name, value] = expr;
       return env.set(name, this.eval(value, env));
     }
 

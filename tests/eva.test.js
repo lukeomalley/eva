@@ -68,6 +68,19 @@ function testEval() {
       ],
       expected: 30,
     },
+    // Assignment
+    {
+      name: "assignment 1",
+      input: [
+        'begin', 
+        ['var', 'data', 10], 
+          ['begin', 
+            ['set', 'data', ['*', 'data', 'data']],
+          ], 
+        'data'
+      ],
+      expected: 100,
+    },
   ];
 
   let testHasFailed = false;
