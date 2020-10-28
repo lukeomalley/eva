@@ -24,23 +24,23 @@ class Eva {
     // Binary Operators
     // =========================================================================
     if (expr[0] === '+') {
-      return this.eval(expr[1]) + this.eval(expr[2]);
+      return this.eval(expr[1], env) + this.eval(expr[2], env);
     }
 
     if (expr[0] === '*') {
-      return this.eval(expr[1]) * this.eval(expr[2]);
+      return this.eval(expr[1], env) * this.eval(expr[2], env);
     }
 
     if (expr[0] === '-') {
-      return this.eval(expr[1]) - this.eval(expr[2]);
+      return this.eval(expr[1], env) - this.eval(expr[2], env);
     }
 
     if (expr[0] === '/') {
-      return this.eval(expr[1]) / this.eval(expr[2]);
+      return this.eval(expr[1], env) / this.eval(expr[2], env);
     }
 
     if (expr[0] === '%') {
-      return this.eval(expr[1]) % this.eval(expr[2]);
+      return this.eval(expr[1], env) % this.eval(expr[2], env);
     }
 
     // =========================================================================
@@ -48,14 +48,34 @@ class Eva {
     // =========================================================================
     if (expr[0] === 'var') {
       const [_, name, value] = expr;
-      return env.set(name, this.eval(value));
+      return env.set(name, this.eval(value, env));
     }
 
     if (this.isVariableName(expr)) {
       return env.get(expr);
     }
 
+    // =========================================================================
+    // Blocks
+    // =========================================================================
+
+    if (expr[0] === 'begin') {
+      const blockEnv = new Environment({}, env);
+      return this._evalBlock(expr, blockEnv);
+    }
+
     console.log(`Unimplemented: ${JSON.stringify(expr)}`);
+  }
+
+  _evalBlock(block, env) {
+    let result;
+
+    const [_tag, ...expressions] = block;
+    expressions.forEach((expr) => {
+      result = this.eval(expr, env);
+    });
+
+    return result;
   }
 
   isVariableName(expr) {
