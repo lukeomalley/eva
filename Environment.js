@@ -23,11 +23,11 @@ class Environment {
       return this.values[name];
     }
 
-    while (!this.values.hasOwnProperty(name) && this.enclosing !== null) {
-      return this.enclosing.get(name);
+    if (this.enclosing === null) {
+      throw new ReferenceError(`Variable ${name} is not defined.`);
     }
 
-    throw new ReferenceError(`Variable ${name} is not defined.`);
+    return this.enclosing.get(name);
   }
 }
 
