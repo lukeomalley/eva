@@ -1,0 +1,27 @@
+{
+  "name": "eva-lang",
+  "version": "1.0.0",
+  "description": "interpreter for eva, a simple lisp dialect",
+  "main": "src/Eva.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukeomalley/eva.git"
+  },
+  "keywords": [
+    "lisp",
+    "intrepreter",
+    "eva",
+    "parser",
+    "programming",
+    "language"
+  ],
+  "author": "@lukeomalley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lukeomalley/eva/issues"
+  },
+  "homepage": "https://github.com/lukeomalley/eva#readme"
+}
