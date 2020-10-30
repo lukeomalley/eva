@@ -1,7 +1,7 @@
 /**
  * Environment - Named storage for variables
  */
-class Environment {
+export default class Environment {
   constructor(values = {}, enclosing = null) {
     this.enclosing = enclosing;
     this.values = values;
@@ -11,7 +11,7 @@ class Environment {
    * Declares a variable in the current scope
    */
   define(name, value) {
-    if (this.values.hasOwnProperty(name)) {
+    if (Object.prototype.hasOwnProperty.call(this.values, name)) {
       throw new ReferenceError(`Variable ${name} has already been declared.`);
     }
     this.values[name] = value;
@@ -22,7 +22,7 @@ class Environment {
    * Sets a variable in the scope chain
    */
   set(name, value) {
-    this._resolve(name).values[name] = value;
+    this.resolve(name).values[name] = value;
     return value;
   }
 
@@ -30,14 +30,14 @@ class Environment {
    * Returns the value of the given variable
    */
   get(name) {
-    return this._resolve(name).values[name];
+    return this.resolve(name).values[name];
   }
 
   /**
    * Returns the environment which contains the name
    */
-  _resolve(name) {
-    if (this.values.hasOwnProperty(name)) {
+  resolve(name) {
+    if (Object.prototype.hasOwnProperty.call(this.values, name)) {
       return this;
     }
 
@@ -45,8 +45,6 @@ class Environment {
       throw new ReferenceError(`Variable ${name} is not defined.`);
     }
 
-    return this.enclosing._resolve(name);
+    return this.enclosing.resolve(name);
   }
 }
-
-module.exports = Environment;
