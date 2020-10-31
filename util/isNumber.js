@@ -1,3 +1,5 @@
-export default function isNumber(expr) {
+function isNumber(expr) {
   return typeof expr === 'number';
 }
+
+module.exports = isNumber;

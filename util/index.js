@@ -1,5 +1,5 @@
-import isNumber from './isNumber';
-import isString from './isString';
-import isVariableName from './isVariableName';
+const isNumber = require('./isNumber');
+const isString = require('./isString');
+const isVariableName = require('./isVariableName');
 
-export { isNumber, isString, isVariableName };
+module.exports = { isNumber, isString, isVariableName };

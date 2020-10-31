@@ -1,7 +1,7 @@
 /**
  * Environment - Named storage for variables
  */
-export default class Environment {
+class Environment {
   constructor(values = {}, enclosing = null) {
     this.enclosing = enclosing;
     this.values = values;
@@ -48,3 +48,5 @@ export default class Environment {
     return this.enclosing.resolve(name);
   }
 }
+
+module.exports = Environment;

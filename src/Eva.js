@@ -1,10 +1,10 @@
-import Environment from './Environment';
-import { isNumber, isString, isVariableName } from '../util';
+const Environment = require('./Environment');
+const { isNumber, isString, isVariableName } = require('../util');
 
 /**
  * Eva interpreter
  */
-export default class Eva {
+class Eva {
   constructor(globalEnv = new Environment()) {
     this.global = globalEnv;
   }
@@ -141,3 +141,5 @@ export default class Eva {
     return result;
   }
 }
+
+module.exports = Eva;
