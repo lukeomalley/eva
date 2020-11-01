@@ -79,13 +79,9 @@ class Eva {
     if (expr[0] === 'def') {
       const [, name, params, body] = expr;
 
-      const fn = {
-        params,
-        body,
-        env, // Closure captures the env where it was defined
-      };
+      const varExpr = ['var', name, ['lambda', params, body]];
 
-      return env.define(name, fn);
+      return this.eval(varExpr, env);
     }
 
     if (expr[0] === 'lambda') {
