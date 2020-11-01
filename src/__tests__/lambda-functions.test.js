@@ -39,6 +39,19 @@ function TestLambdaFunctions() {
       `,
       expected: 4,
     },
+    {
+      name: 'Lambda 4',
+      input: `
+          (begin
+            (def factorial (x)
+              (if (= x 1)
+                1
+                (* x (factorial (- x 1)))))
+            (factorial 5)
+          )
+      `,
+      expected: 120,
+    },
   ];
 
   testEva(tests);
