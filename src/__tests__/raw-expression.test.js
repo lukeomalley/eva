@@ -1,6 +1,8 @@
 const { testEvaWithoutParser } = require('./test-runner');
 
 function test() {
+  console.log('Raw Expression Tests');
+  console.log('--------------------------------------------------------------------------------');
   const tests = [
     // Numbers
     { name: 'numbers 1', input: 1, expected: 1 },

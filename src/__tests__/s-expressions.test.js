@@ -1,17 +1,20 @@
 const { testEva } = require('./test-runner');
 
 function test() {
+  console.log('S Expression Tests');
+  console.log('--------------------------------------------------------------------------------');
+
   const tests = [
     { name: 'numbers 1', input: '1', expected: 1 },
     {
-      name: 'numbers 1',
+      name: 'numbers 2',
       input: `
         (+ 5 5)
       `,
       expected: 10,
     },
     {
-      name: 'numbers 1',
+      name: 'numbers 3',
       input: `
         (begin
           (var x 10)  

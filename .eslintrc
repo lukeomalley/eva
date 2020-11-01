@@ -5,6 +5,9 @@
   "overrides": [{
       "files": "*",
       "rules": 
-        {"no-console":"off"}
+        {
+          "no-console":"off", 
+          "func-names":"off"
+        }
   }]
 }

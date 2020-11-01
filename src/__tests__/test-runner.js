@@ -1,18 +1,11 @@
 const assert = require('assert');
 const evaParser = require('../parser/evaParser');
 const Eva = require('../Eva');
-const Environment = require('../Environment');
 
 function testEvaWithoutParser(tests) {
   let testHasFailed = false;
   tests.forEach((test) => {
-    const eva = new Eva(
-      new Environment({
-        null: null,
-        true: true,
-        false: false,
-      }),
-    );
+    const eva = new Eva();
 
     // Execute the code
     let result;
@@ -39,13 +32,7 @@ function testEvaWithoutParser(tests) {
 function testEva(tests) {
   let testHasFailed = false;
   tests.forEach((test) => {
-    const eva = new Eva(
-      new Environment({
-        null: null,
-        true: true,
-        false: false,
-      }),
-    );
+    const eva = new Eva();
 
     // Parse the input
     const expressions = evaParser.parse(test.input);

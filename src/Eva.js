@@ -1,11 +1,12 @@
 const Environment = require('./Environment');
+const GlobalEnvironment = require('./GlobalEnvironment');
 const { isNumber, isString, isVariableName } = require('../util');
 
 /**
  * Eva interpreter
  */
 class Eva {
-  constructor(globalEnv = new Environment()) {
+  constructor(globalEnv = GlobalEnvironment) {
     this.global = globalEnv;
   }
 
@@ -19,52 +20,6 @@ class Eva {
 
     if (isString(expr)) {
       return expr.slice(1, -1);
-    }
-
-    // =========================================================================
-    // Binary Operators
-    // =========================================================================
-    if (expr[0] === '+') {
-      return this.eval(expr[1], env) + this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '*') {
-      return this.eval(expr[1], env) * this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '-') {
-      return this.eval(expr[1], env) - this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '/') {
-      return this.eval(expr[1], env) / this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '%') {
-      return this.eval(expr[1], env) % this.eval(expr[2], env);
-    }
-
-    // =========================================================================
-    // Conparison Operators
-    // =========================================================================
-    if (expr[0] === '>') {
-      return this.eval(expr[1], env) > this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '<') {
-      return this.eval(expr[1], env) < this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '>=') {
-      return this.eval(expr[1], env) >= this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '<=') {
-      return this.eval(expr[1], env) <= this.eval(expr[2], env);
-    }
-
-    if (expr[0] === '==') {
-      return this.eval(expr[1], env) === this.eval(expr[2], env);
     }
 
     // =========================================================================
@@ -89,6 +44,7 @@ class Eva {
     // =========================================================================
     if (expr[0] === 'begin') {
       const blockEnv = new Environment({}, env);
+
       return this.evalBlock(expr, blockEnv);
     }
 
@@ -117,13 +73,18 @@ class Eva {
       return result;
     }
 
-    // =========================================================================
-    // Print
-    // =========================================================================
+    // Functions
+    if (Array.isArray(expr)) {
+      const fn = this.eval(expr[0], env);
 
-    if (expr[0] === 'print') {
-      console.log(this.eval(expr[1], env));
-      return null;
+      const args = expr.slice(1).map((ex) => this.eval(ex, env));
+
+      // Native Functions
+      if (typeof fn === 'function') {
+        return fn(...args);
+      }
+
+      // TODO: User Defined Functions
     }
 
     console.log(`Unimplemented: ${JSON.stringify(expr)}`);
@@ -134,6 +95,7 @@ class Eva {
     let result;
 
     const [, ...expressions] = block;
+
     expressions.forEach((expr) => {
       result = this.eval(expr, env);
     });
