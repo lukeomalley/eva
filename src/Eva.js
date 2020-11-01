@@ -1,4 +1,5 @@
 const Environment = require('./Environment');
+const Transformer = require('./transformer/Transformer');
 const GlobalEnvironment = require('./GlobalEnvironment');
 const { isNumber, isString, isVariableName } = require('../util');
 
@@ -8,6 +9,7 @@ const { isNumber, isString, isVariableName } = require('../util');
 class Eva {
   constructor(globalEnv = GlobalEnvironment) {
     this.global = globalEnv;
+    this.transformer = new Transformer();
   }
 
   eval(expr, env = this.global) {
@@ -77,10 +79,7 @@ class Eva {
     // Function Declarations
     // =========================================================================
     if (expr[0] === 'def') {
-      const [, name, params, body] = expr;
-
-      const varExpr = ['var', name, ['lambda', params, body]];
-
+      const varExpr = this.transformer.transformDefToVarLambda(expr);
       return this.eval(varExpr, env);
     }
 
