@@ -1,5 +1,7 @@
 {
   "extends": "airbnb-base",
+
+  "ignorePatterns": "evaParser.js",
   "overrides": [{
       "files": "*",
       "rules": 
