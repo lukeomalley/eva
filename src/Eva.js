@@ -88,6 +88,12 @@ class Eva {
       return env.define(name, fn);
     }
 
+    if (expr[0] === 'lambda') {
+      const [, params, body] = expr;
+
+      return { params, body, env };
+    }
+
     // =========================================================================
     // Function Calls
     // =========================================================================
@@ -113,6 +119,10 @@ class Eva {
     console.log(`Unimplemented: ${JSON.stringify(expr)}`);
     return null;
   }
+
+  // =========================================================================
+  // Util Methods
+  // =========================================================================
 
   evalBody(body, env) {
     if (body[0] === 'block') {
