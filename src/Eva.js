@@ -62,6 +62,11 @@ class Eva {
       return this.eval(alternate, env);
     }
 
+    if (expr[0] === 'switch') {
+      const ifExpr = this.transformer.transformSwitchToIf(expr);
+      return this.eval(ifExpr, env);
+    }
+
     // =========================================================================
     // Loops
     // =========================================================================

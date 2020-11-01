@@ -6,6 +6,7 @@ const tests = [
   require('./built-ins.test'),
   require('./user-defined-functions.test'),
   require('./lambda-functions.test'),
+  require('./switch.test'),
 ];
 
 function runTests() {
