@@ -1,9 +1,10 @@
 /* eslint-disable global-require */
 // prettier-ignore
 const tests = [
-  require('./raw-expression.test'),
-  require('./s-expressions.test'),
-  require('./built-ins.test'),
+  // require('./raw-expression.test'),
+  // require('./s-expressions.test'),
+  // require('./built-ins.test'),
+  require('./user-defined-functions.test'),
 ];
 
 function runTests() {
