@@ -22,6 +22,23 @@ function TestLambdaFunctions() {
       `,
       expected: 300,
     },
+    {
+      name: 'Lambda 2',
+      input: `
+        ((lambda (x) (* x x)) 2)
+      `,
+      expected: 4,
+    },
+    {
+      name: 'Lambda 3',
+      input: `
+        (begin
+          (var square (lambda (x) (* x x)))
+          (square 2)
+        )
+      `,
+      expected: 4,
+    },
   ];
 
   testEva(tests);
