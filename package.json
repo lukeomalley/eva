@@ -4,7 +4,7 @@
   "description": "interpreter for eva, a simple lisp dialect",
   "main": "src/Eva.js",
   "scripts": {
-    "test": "node ./tests "
+    "test": "node src/__tests__ "
   },
   "repository": {
     "type": "git",

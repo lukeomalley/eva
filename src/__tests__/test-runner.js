@@ -1,7 +1,7 @@
 const assert = require('assert');
-const evaParser = require('../src/parser/evaParser');
-const Eva = require('../src/Eva');
-const Environment = require('../src/Environment');
+const evaParser = require('../parser/evaParser');
+const Eva = require('../Eva');
+const Environment = require('../Environment');
 
 function testEvaWithoutParser(tests) {
   let testHasFailed = false;
