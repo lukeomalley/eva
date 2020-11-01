@@ -1,6 +1,6 @@
-const testEva = require('./test-runner');
+const { testEvaWithoutParser } = require('./test-runner');
 
-function testEval() {
+function test() {
   const tests = [
     // Numbers
     { name: 'numbers 1', input: 1, expected: 1 },
@@ -34,23 +34,12 @@ function testEval() {
     // Blocks
     {
       name: 'blocks 1',
-      input: [
-        'begin',
-        ['var', 'x', 10],
-        ['var', 'y', 20],
-        ['+', ['*', 'x', 'y'], 30],
-      ],
+      input: ['begin', ['var', 'x', 10], ['var', 'y', 20], ['+', ['*', 'x', 'y'], 30]],
       expected: 230,
     },
     {
       name: 'blocks 2',
-      input: [
-        'begin',
-        ['var', 'x', 10],
-        ['begin',
-          ['var', 'x', 20],
-        ],
-        'x'],
+      input: ['begin', ['var', 'x', 10], ['begin', ['var', 'x', 20]], 'x'],
       expected: 10,
     },
     {
@@ -58,12 +47,7 @@ function testEval() {
       input: [
         'begin',
         ['var', 'value', 10],
-        ['var', 'result',
-          ['begin',
-            ['var', 'x', ['+', 'value', 20]],
-            'x',
-          ],
-        ],
+        ['var', 'result', ['begin', ['var', 'x', ['+', 'value', 20]], 'x']],
         'result',
       ],
       expected: 30,
@@ -72,14 +56,7 @@ function testEval() {
     // Assignment
     {
       name: 'assignment 1',
-      input: [
-        'begin',
-        ['var', 'data', 10],
-        ['begin',
-          ['set', 'data', ['*', 'data', 'data']],
-        ],
-        'data',
-      ],
+      input: ['begin', ['var', 'data', 10], ['begin', ['set', 'data', ['*', 'data', 'data']]], 'data'],
       expected: 100,
     },
 
@@ -90,10 +67,7 @@ function testEval() {
         'begin',
         ['var', 'x', 5],
         ['var', 'y', 20],
-        ['if', ['>', 'x', 10],
-          ['set', 'y', 20],
-          ['set', 'y', 30],
-        ],
+        ['if', ['>', 'x', 10], ['set', 'y', 20], ['set', 'y', 30]],
         'y',
       ],
       expected: 30,
@@ -106,11 +80,10 @@ function testEval() {
         'begin',
         ['var', 'counter', 1],
         ['var', 'result', 1],
-        ['while', ['<', 'counter', 10],
-          ['begin',
-            ['set', 'result', ['*', 'result', 2]],
-            ['set', 'counter', ['+', 'counter', 1]],
-          ],
+        [
+          'while',
+          ['<', 'counter', 10],
+          ['begin', ['set', 'result', ['*', 'result', 2]], ['set', 'counter', ['+', 'counter', 1]]],
         ],
         'result',
       ],
@@ -118,7 +91,7 @@ function testEval() {
     },
   ];
 
-  testEva(tests);
+  testEvaWithoutParser(tests);
 }
 
-testEval();
+module.exports = test;
