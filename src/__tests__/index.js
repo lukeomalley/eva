@@ -9,6 +9,7 @@ const tests = [
   require('./switch.test'),
   require('./increment-decrement.test'),
   require('./for-loop.test'),
+  require('./class.test'),
 ];
 
 function runTests() {

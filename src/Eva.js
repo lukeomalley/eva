@@ -33,8 +33,16 @@ class Eva {
     }
 
     if (expr[0] === 'set') {
-      const [, name, value] = expr;
-      return env.set(name, this.eval(value, env));
+      const [, ref, value] = expr;
+
+      if (ref[0] === 'prop') {
+        const [, instance, propName] = ref;
+        const instanceEnv = this.eval(instance, env);
+
+        return instanceEnv.define(propName, this.eval(value, env));
+      }
+
+      return env.set(ref, this.eval(value, env));
     }
 
     if (isVariableName(expr)) {
@@ -100,6 +108,35 @@ class Eva {
     }
 
     // =========================================================================
+    // Classes
+    // =========================================================================
+    if (expr[0] === 'class') {
+      const [, name, parent, body] = expr;
+      const parentEnv = this.eval(parent, env) || env;
+      const classEnv = new Environment({}, parentEnv);
+
+      this.evalBody(body, classEnv);
+      return env.define(name, classEnv);
+    }
+
+    if (expr[0] === 'new') {
+      const classEnv = this.eval(expr[1], env);
+      const instanceEnv = new Environment({}, classEnv);
+      const args = expr.slice(2).map((arg) => this.eval(arg, env));
+
+      // Call the constructor
+      this.callUserDefinedFunction(classEnv.get('constructor'), [instanceEnv, ...args]);
+
+      return instanceEnv;
+    }
+
+    if (expr[0] === 'prop') {
+      const [, instance, name] = expr;
+      const instanceEnv = this.eval(instance, env);
+      return instanceEnv.get(name);
+    }
+
+    // =========================================================================
     // Function Declarations
     // =========================================================================
     if (expr[0] === 'def') {
@@ -126,13 +163,7 @@ class Eva {
       }
 
       // User Defined Functions
-      const activationRecord = {};
-      fn.params.forEach((param, i) => {
-        activationRecord[param] = args[i];
-      });
-
-      const activationEnvironment = new Environment(activationRecord, fn.env);
-      return this.evalBody(fn.body, activationEnvironment);
+      return this.callUserDefinedFunction(fn, args);
     }
 
     console.log(`Unimplemented: ${JSON.stringify(expr)}`);
@@ -143,8 +174,18 @@ class Eva {
   // Util Methods
   // =========================================================================
 
+  callUserDefinedFunction(fn, args) {
+    const activationRecord = {};
+    fn.params.forEach((param, i) => {
+      activationRecord[param] = args[i];
+    });
+
+    const activationEnvironment = new Environment(activationRecord, fn.env);
+    return this.evalBody(fn.body, activationEnvironment);
+  }
+
   evalBody(body, env) {
-    if (body[0] === 'block') {
+    if (body[0] === 'begin') {
       return this.evalBlock(body, env);
     }
 
