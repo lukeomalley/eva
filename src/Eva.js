@@ -42,6 +42,20 @@ class Eva {
     }
 
     // =========================================================================
+    // Operators
+    // =========================================================================
+
+    if (expr[0] === '++') {
+      const setExpr = this.transformer.transformIncToSet(expr);
+      return this.eval(setExpr, env);
+    }
+
+    if (expr[0] === '--') {
+      const setExpr = this.transformer.transformDecToSet(expr);
+      return this.eval(setExpr, env);
+    }
+
+    // =========================================================================
     // Blocks
     // =========================================================================
     if (expr[0] === 'begin') {
@@ -78,6 +92,11 @@ class Eva {
       }
 
       return result;
+    }
+
+    if (expr[0] === 'for') {
+      const whileExpr = this.transformer.transformForToWhile(expr);
+      return this.eval(whileExpr, env);
     }
 
     // =========================================================================

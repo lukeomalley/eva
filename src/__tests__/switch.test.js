@@ -1,6 +1,6 @@
 const { testEva } = require('./test-runner');
 
-function TestLambdaFunctions() {
+function TestSwitch() {
   console.log('Switch Tests');
   console.log('--------------------------------------------------------------------------------');
 
@@ -23,4 +23,4 @@ function TestLambdaFunctions() {
   testEva(tests);
 }
 
-module.exports = TestLambdaFunctions;
+module.exports = TestSwitch;

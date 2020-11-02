@@ -7,6 +7,8 @@ const tests = [
   require('./user-defined-functions.test'),
   require('./lambda-functions.test'),
   require('./switch.test'),
+  require('./increment-decrement.test'),
+  require('./for-loop.test'),
 ];
 
 function runTests() {

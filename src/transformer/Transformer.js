@@ -14,7 +14,7 @@ class Transformer {
 
     let currentIfExpr = ifExpr;
 
-    for (let i = 0; i < cases.length - 1; i++) {
+    for (let i = 0; i < cases.length - 1; i += 1) {
       const [currentCond, currentBlock] = cases[i];
 
       currentIfExpr[1] = currentCond;
@@ -29,6 +29,22 @@ class Transformer {
     }
 
     return ifExpr;
+  }
+
+  /**
+   * (for (var x 10) (> x 0) (-- x) (print x))
+   */
+  transformForToWhile(forExpr) {
+    const [, init, condition, modifier, body] = forExpr;
+    return ['begin', init, ['while', condition, ['begin', ...body, modifier]]];
+  }
+
+  transformIncToSet(incExpr) {
+    return ['set', incExpr[1], ['+', incExpr[1], 1]];
+  }
+
+  transformDecToSet(decExpr) {
+    return ['set', decExpr[1], ['-', decExpr[1], 1]];
   }
 }
 
