@@ -42,6 +42,7 @@ function testEva(tests) {
     try {
       result = eva.eval(expressions);
     } catch (err) {
+      console.log(err);
       console.log(`[test - ${test.name}] RuntimeError: ${err.message}`);
     }
 

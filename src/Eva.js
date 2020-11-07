@@ -136,6 +136,25 @@ class Eva {
       return instanceEnv.get(name);
     }
 
+    if (expr[0] === 'super') {
+      const [, className] = expr;
+      return this.eval(className, env).enclosing;
+    }
+
+    // =========================================================================
+    // Modules
+    // =========================================================================
+
+    if (expr[0] === 'module') {
+      const [, moduleName, body] = expr;
+
+      const moduleEnv = new Environment({}, env);
+
+      this.evalBody(body, moduleEnv);
+
+      return env.define(moduleName, moduleEnv);
+    }
+
     // =========================================================================
     // Function Declarations
     // =========================================================================
