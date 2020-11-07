@@ -35,7 +35,7 @@ function testEva(tests) {
     const eva = new Eva();
 
     // Parse the input
-    const expressions = evaParser.parse(test.input);
+    const expressions = evaParser.parse(`(begin ${test.input})`);
 
     // Execute the code
     let result;

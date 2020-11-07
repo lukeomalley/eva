@@ -3,11 +3,11 @@
  *
  * 1. Install syntax-cli:
  *
- *   npm install syntax-cli
+ *   npm install -g syntax-cli
  *
  * 2. Generate the parser from this grammar:
  *
- *   npx syntax-cli -g parser/eva-grammar.bnf -m LALR1 -o parser/evaParser.js
+ *   syntax-cli -g parser/eva-grammar.bnf -m LALR1 -o parser/evaParser.js
  *
  * Examples:
  *
@@ -16,9 +16,8 @@
  * List: (), (+ 5 x), (print "hello")
  */
 
-// =============================================================================
+// -----------------------------------------------
 // Lexical grammar (tokens):
-// =============================================================================
 
 %lex
 
@@ -30,13 +29,12 @@
 
 \d+               return 'NUMBER'
 
-[\w\-+*%=<>/]+     return 'SYMBOL'
+[\w\-+*=<>/]+     return 'SYMBOL'
 
 /lex
 
-// =============================================================================
+// -----------------------------------------------
 // Syntactic grammar (BNF):
-// =============================================================================
 
 %%
 
