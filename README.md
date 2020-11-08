@@ -8,9 +8,9 @@
 
 2. Run the eva 'binary' with the '-e' flag to execute code passed on the command line or '-f' to execute an eva file.
 
-Execute an eva source code file: `./bin/eva -f fib.eva`
+**Execute an eva source code file:** `./bin/eva -f fib.eva`
 
-Execute a simple expression: `./bin/eva -e '(var x 10) (print x)'`
+**Execute a simple expression:** `./bin/eva -e '(var x 10) (print x)'`
 
 ## Example Eva Code
 
