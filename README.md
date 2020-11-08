@@ -14,7 +14,7 @@
 
 ### Execute a simple statement in the console
 
-`bin/eva -e '(var x 10) (print x)'`
+`./bin/eva -e '(var x 10) (print x)'`
 
 ## Example Eva Code
 
