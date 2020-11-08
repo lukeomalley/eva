@@ -1,0 +1,16 @@
+(module Math
+  (begin
+    (var PI 3)
+
+    (def abs (value)
+      (if (< value 0)
+        (- value)
+        (value)
+      )
+    )
+
+    (def square (num)
+      (* num num)
+    )
+  )  
+)

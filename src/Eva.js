@@ -1,3 +1,5 @@
+const fs = require('fs');
+const evaParser = require('./parser/evaParser');
 const Environment = require('./Environment');
 const Transformer = require('./transformer/Transformer');
 const GlobalEnvironment = require('./GlobalEnvironment');
@@ -132,7 +134,9 @@ class Eva {
 
     if (expr[0] === 'prop') {
       const [, instance, name] = expr;
+
       const instanceEnv = this.eval(instance, env);
+
       return instanceEnv.get(name);
     }
 
@@ -153,6 +157,16 @@ class Eva {
       this.evalBody(body, moduleEnv);
 
       return env.define(moduleName, moduleEnv);
+    }
+
+    if (expr[0] === 'import') {
+      const [, moduleName] = expr;
+
+      const moduleSrc = fs.readFileSync(`${__dirname}/modules/${moduleName}.eva`, 'utf-8');
+
+      const parsedModule = evaParser.parse(moduleSrc);
+
+      return this.eval(parsedModule, this.global);
     }
 
     // =========================================================================
