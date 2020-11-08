@@ -1,8 +1,22 @@
-# 🦉 Eva Lang
+# 🏔 Eva Lang
 
-> Eva is a dialect of lisp implemented in JavaScript. This project was build with the purpose of understanding how an interpreter for a dialect of lisp works
+> Eva is a dialect of lisp implemented in JavaScript. This project was build with the purpose of understanding how an interpreter for a dialect of lisp works. The current implementation supports variables, loops, conditionals, fisrt class functions, lambda functions, closures, classes and modules.
 
-## Examples
+## Usage
+
+1. Clone the repository
+
+2. Run the eva 'binary' with the '-e' flag to execute code passed on the command line or '-f' to execute an eva file.
+
+### Execute an eva source code file
+
+`./bin/eva -f fib.eva`
+
+### Execute a simple statement in the console
+
+`bin/eva -e '(var x 10) (print x)'`
+
+## Example Eva Code
 
 Simple Arithmetic
 
